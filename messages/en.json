@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "artists": "Artists",
+    "exhibitions": "Exhibitions",
+    "fairs": "Fairs",
+    "news": "News",
+    "contact": "Contact",
+    "toggleMenu": "Toggle menu"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "newsletter": "Newsletter",
+    "subscribe": "Subscribe",
+    "subscribing": "Sending...",
+    "subscribeSuccess": "Successfully subscribed!",
+    "subscribeError": "Please enter a valid email",
+    "contact": "Contact",
+    "address": "Address",
+    "hours": "Hours",
+    "email": "Email"
+  },
+  "pages": {
+    "home": "Home",
+    "loading": "Loading...",
+    "notFound": "Not found",
+    "backTo": "Back to",
+    "viewAll": "View all",
+    "loadMore": "Load more",
+    "readMore": "Read more",
+    "viewExhibition": "View Exhibition",
+    "discoverExhibition": "Discover Exhibition"
+  },
+  "exhibitions": {
+    "title": "Exhibitions",
+    "current": "Current Exhibitions",
+    "upcoming": "Upcoming Exhibitions",
+    "past": "Past Exhibitions",
+    "noCurrent": "No current exhibitions.",
+    "description": "Description",
+    "curator": "Curator",
+    "dates": "Dates",
+    "location": "Location"
+  },
+  "artists": {
+    "title": "Artists",
+    "biography": "Biography",
+    "statement": "Statement",
+    "works": "Works",
+    "news": "Artist News"
+  },
+  "artworks": {
+    "title": "Artworks",
+    "description": "Description",
+    "gallery": "Gallery",
+    "videos": "Videos",
+    "relatedNews": "Related News"
+  },
+  "fairs": {
+    "title": "Fairs",
+    "upcoming": "Upcoming Fairs",
+    "past": "Past Fairs",
+    "description": "Description",
+    "booth": "Booth",
+    "dates": "Dates",
+    "location": "Location"
+  },
+  "news": {
+    "title": "News",
+    "latest": "Latest News",
+    "related": "Related News",
+    "readFull": "Read full article",
+    "viewMore": "View more information",
+    "backToNews": "Back to News",
+    "notFound": "News not found",
+    "exhibitionNews": "Exhibition News",
+    "fairNews": "Fair News"
+  },
+  "contact": {
+    "title": "Contact",
+    "address": "Address",
+    "hours": "Hours",
+    "phone": "Phone",
+    "email": "Email",
+    "schedule": {
+      "weekdays": "Tuesday to Saturday: 11am - 7pm",
+      "sunday": "Sunday: 11am - 2pm",
+      "monday": "Monday: Closed"
+    },
+    "emails": {
+      "info": "info@pioneragaleria.com",
+      "press": "press@pioneragaleria.com",
+      "sales": "sales@pioneragaleria.com"
+    }
+  },
+  "common": {
+    "year": "year",
+    "years": "years",
+    "medium": "Medium",
+    "dimensions": "Dimensions",
+    "toggleTheme": "Toggle theme",
+    "toggleMenu": "Toggle menu",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "playVideo": "Play video"
+  }
+}

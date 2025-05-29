@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "artists": "Artistas",
+    "exhibitions": "Exposiciones",
+    "fairs": "Ferias",
+    "news": "Noticias",
+    "contact": "Contacto",
+    "toggleMenu": "Abrir menú"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados",
+    "newsletter": "Newsletter",
+    "subscribe": "Suscribirse",
+    "subscribing": "Enviando...",
+    "subscribeSuccess": "¡Te has suscrito correctamente!",
+    "subscribeError": "Por favor ingresa un email válido",
+    "contact": "Contacto",
+    "address": "Dirección",
+    "hours": "Horario",
+    "email": "Email"
+  },
+  "pages": {
+    "home": "Inicio",
+    "loading": "Cargando...",
+    "notFound": "No encontrado",
+    "backTo": "Volver a",
+    "viewAll": "Ver todo",
+    "loadMore": "Cargar más",
+    "readMore": "Leer más",
+    "viewExhibition": "Ver Exposición",
+    "discoverExhibition": "Descubrir Exposición"
+  },
+  "exhibitions": {
+    "title": "Exposiciones",
+    "current": "Exposiciones Actuales",
+    "upcoming": "Próximas Exposiciones",
+    "past": "Exposiciones Pasadas",
+    "noCurrent": "No hay exposiciones actuales.",
+    "description": "Descripción",
+    "curator": "Curador",
+    "dates": "Fechas",
+    "location": "Ubicación"
+  },
+  "artists": {
+    "title": "Artistas",
+    "biography": "Biografía",
+    "statement": "Statement",
+    "works": "Obras",
+    "news": "Noticias sobre el artista"
+  },
+  "artworks": {
+    "title": "Obras",
+    "description": "Descripción",
+    "gallery": "Galería",
+    "videos": "Videos",
+    "relatedNews": "Noticias relacionadas"
+  },
+  "fairs": {
+    "title": "Ferias",
+    "upcoming": "Próximas Ferias",
+    "past": "Ferias Pasadas",
+    "description": "Descripción",
+    "booth": "Stand",
+    "dates": "Fechas",
+    "location": "Ubicación"
+  },
+  "news": {
+    "title": "Noticias",
+    "latest": "Últimas Noticias",
+    "related": "Noticias relacionadas",
+    "readFull": "Leer artículo completo",
+    "viewMore": "Ver más información",
+    "backToNews": "Volver a Noticias",
+    "notFound": "Noticia no encontrada",
+    "exhibitionNews": "Noticias sobre la exposición",
+    "fairNews": "Noticias sobre la feria"
+  },
+  "contact": {
+    "title": "Contacto",
+    "address": "Dirección",
+    "hours": "Horario",
+    "phone": "Teléfono",
+    "email": "Email",
+    "schedule": {
+      "weekdays": "Martes a Sábado: 11:00 - 20:00",
+      "sunday": "Domingo: 11:00 - 14:00",
+      "monday": "Lunes: Cerrado"
+    },
+    "emails": {
+      "info": "info@pioneragaleria.com",
+      "press": "prensa@pioneragaleria.com",
+      "sales": "ventas@pioneragaleria.com"
+    }
+  },
+  "common": {
+    "year": "año",
+    "years": "años",
+    "medium": "Técnica",
+    "dimensions": "Dimensiones",
+    "toggleTheme": "Cambiar tema",
+    "toggleMenu": "Abrir menú",
+    "close": "Cerrar",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "playVideo": "Reproducir video"
+  }
+}
