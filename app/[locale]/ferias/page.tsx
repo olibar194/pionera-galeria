@@ -22,7 +22,7 @@ export default function FairsPage() {
     {}
   )
 
-  // Sort years in descending order
+  // Sort years in descending order!
   const sortedYears = Object.keys(pastFairsByYear).sort(
     (a, b) => Number.parseInt(b) - Number.parseInt(a)
   )
