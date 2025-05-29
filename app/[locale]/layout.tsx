@@ -34,13 +34,17 @@ export default async function LocaleLayout({
   children: React.ReactNode
   params: { locale: string }
 }) {
+  // 1. Ensure async operations like getMessages are awaited first.
+  // getMessages from next-intl/server can often infer the locale automatically.
+  const messages = await getMessages()
+
+  // 2. Now it's safe to destructure and use params.locale.
   const { locale } = params
 
+  // 3. Use locale for validation or other logic.
   if (!routing.locales.includes(locale as any)) {
     notFound()
   }
-
-  const messages = await getMessages()
 
   return (
     <html

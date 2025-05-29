@@ -43,7 +43,7 @@ export default function NewsPage() {
         <div className='flex justify-center'>
           <Button
             onClick={loadMore}
-            className='border-2 border-black dark:border-white bg-transparent text-white dark:text-black px-8 py-6 text-lg uppercase hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black'
+            className='border-2 border-black dark:border-white bg-transparent text-black dark:text-white px-8 py-6 text-lg uppercase hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black'
           >
             {tPages('loadMore')}
           </Button>
