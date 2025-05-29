@@ -15,6 +15,6 @@ export const config = {
     // Enable redirects that add missing locales
     // (e.g. `/pathnames` -> `/en/pathnames`)
     // And handle paths for the default locale without a prefix
-    '/((?!_next|_vercel|api|.*\\..*).*)', // Exclude _next, _vercel, api, and files with extensions
+    '/((?!_next|_vercel|studio|api|.*\\..*).*)', // Exclude _next, _vercel, api, and files with extensions
   ],
 }
