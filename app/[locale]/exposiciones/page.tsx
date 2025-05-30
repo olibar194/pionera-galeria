@@ -3,7 +3,11 @@ import ExhibitionCard from '@/components/exhibition-card'
 import { getAllExhibitions } from '@/sanity/lib/queries'
 import { parseExhibition } from '@/lib/sanity-parsers'
 
-export default async function ExhibitionsPage({ params }: { params: { locale: string } }) {
+export default async function ExhibitionsPage({
+  params,
+}: {
+  params: { locale: string }
+}) {
   const t = await getTranslations('exhibitions')
   // Fetch all exhibitions from Sanity
   const exhibitionsRaw = await getAllExhibitions(params.locale)
@@ -14,8 +18,12 @@ export default async function ExhibitionsPage({ params }: { params: { locale: st
   const currentExhibitions = exhibitions.filter(
     (exh: any) => new Date(exh.startDate) <= now && new Date(exh.endDate) >= now
   )
-  const upcomingExhibitions = exhibitions.filter((exh: any) => new Date(exh.startDate) > now)
-  const pastExhibitions = exhibitions.filter((exh: any) => new Date(exh.endDate) < now)
+  const upcomingExhibitions = exhibitions.filter(
+    (exh: any) => new Date(exh.startDate) > now
+  )
+  const pastExhibitions = exhibitions.filter(
+    (exh: any) => new Date(exh.endDate) < now
+  )
 
   return (
     <div className='container mx-auto px-4 py-32'>

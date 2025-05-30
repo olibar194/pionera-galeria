@@ -22,7 +22,8 @@ export default function Header() {
   // you can use the following condition:
 
   const isHome = pathname === '/' || pathname === '/en'
-  const forceDark = isHome && !scrolled
+  // Solo forzar dark en home y sin scroll, en otras rutas usar el theme normal
+  const forceDark = isHome && !scrolled ? true : undefined
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,7 +71,7 @@ export default function Header() {
       <div className='container mx-auto px-4 py-4'>
         <div className='flex items-center justify-between'>
           <Link href='/' className='flex items-center'>
-            <Logo forceDark={forceDark} />
+            <Logo forceDark={forceDark} key={pathname} />
           </Link>
 
           <div className='flex items-center'>

@@ -29,10 +29,19 @@ export async function getArtists(locale = 'es') {
     _id,
     name,
     "slug": slug.current,
-    "portraitImage": portraitImage.asset->url,
-    "highlightImage": highlights[0].asset->url,
-    "country": ${localizeField('country', locale)},
-    "city": ${localizeField('city', locale)}
+    "portraitImage": {
+      "url": portraitImage.asset->url,
+      "alt": portraitImage.alt
+    },
+    "highlights": highlights[]{
+      "url": asset->url,
+      "alt": alt
+    },
+    birthYear,
+    "country": {
+      "es": country.es,
+      "en": country.en
+    }
   }`
 
   return await client.fetch(query)

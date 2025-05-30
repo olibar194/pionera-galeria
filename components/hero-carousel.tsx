@@ -45,7 +45,7 @@ export default function HeroCarousel({ exhibitions }: HeroCarouselProps) {
           onClick={prevSlide}
           variant='outline'
           size='icon'
-          className='h-12 w-12 rounded-none border-2 border-white bg-black/50 text-white hover:bg-black hover:text-white dark:border-black dark:bg-white/50 dark:text-black dark:hover:bg-white dark:hover:text-black'
+          className='h-12 w-12 rounded-none bg-transparent border-0 shadow-none text-white dark:text-black hover:bg-transparent hover:text-white dark:hover:text-black'
         >
           <ChevronLeft size={24} />
         </Button>
@@ -53,7 +53,7 @@ export default function HeroCarousel({ exhibitions }: HeroCarouselProps) {
           onClick={nextSlide}
           variant='outline'
           size='icon'
-          className='h-12 w-12 rounded-none border-2 border-white bg-black/50 text-white hover:bg-black hover:text-white dark:border-black dark:bg-white/50 dark:text-black dark:hover:bg-white dark:hover:text-black'
+          className='h-12 w-12 rounded-none bg-transparent border-0 shadow-none text-white dark:text-black hover:bg-transparent hover:text-white dark:hover:text-black'
         >
           <ChevronRight size={24} />
         </Button>
@@ -73,12 +73,11 @@ export default function HeroCarousel({ exhibitions }: HeroCarouselProps) {
             locale === 'es'
               ? exhibition.title?.es || exhibition.title
               : exhibition.title?.en || exhibition.title || ''
-          const subtitle =
-            exhibition.subtitle
-              ? locale === 'es'
-                ? exhibition.subtitle?.es || exhibition.subtitle
-                : exhibition.subtitle?.en || exhibition.subtitle
-              : ''
+          const subtitle = exhibition.subtitle
+            ? locale === 'es'
+              ? exhibition.subtitle?.es || exhibition.subtitle
+              : exhibition.subtitle?.en || exhibition.subtitle
+            : ''
 
           return (
             index === current && (
@@ -142,7 +141,9 @@ export default function HeroCarousel({ exhibitions }: HeroCarouselProps) {
                       transition={{ duration: 0.8, delay: 0.9 }}
                     >
                       {slug && (
-                        <Link href={`/exposiciones/${typeof exhibition.slug === 'string' ? exhibition.slug : exhibition.slug?.current || ''}`}>
+                        <Link
+                          href={`/exposiciones/${typeof exhibition.slug === 'string' ? exhibition.slug : exhibition.slug?.current || ''}`}
+                        >
                           <Button className='h-14 border-2 border-white bg-transparent px-8 text-lg uppercase hover:bg-white hover:text-black'>
                             {t('viewExhibition')}
                           </Button>
