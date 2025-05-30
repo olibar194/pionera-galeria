@@ -9,6 +9,8 @@ import BlockContent from '@/components/block-content'
 import { getArtist, getArtistWorks } from '@/sanity/lib/queries'
 import RelatedNews from '@/components/related-news'
 import { getNewsByArtist } from '@/sanity/lib/news-queries'
+import ExhibitionCard from '@/components/exhibition-card'
+import FairCard from '@/components/fair-card'
 
 export default function ArtistPage() {
   const { slug } = useParams()
@@ -86,7 +88,7 @@ export default function ArtistPage() {
         {/* Bio */}
         {artist.bio && (
           <motion.div
-            className='mb-16'
+            className='mb-8'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -101,7 +103,7 @@ export default function ArtistPage() {
         {/* Statement */}
         {artist.statement && (
           <motion.div
-            className='mb-16'
+            className='mb-8'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -120,12 +122,14 @@ export default function ArtistPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <h2 className='text-3xl font-bold uppercase mb-6'>Obras</h2>
+            <h2 className='text-3xl font-bold uppercase mb-6'>
+              {language === 'es' ? 'Obras' : 'Artworks'}
+            </h2>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
               {artworks.map((artwork: any) => (
                 <motion.div
                   key={artwork._id}
-                  className='group'
+                  className='group pb-8'
                   whileHover={{ y: -5 }}
                   transition={{ duration: 0.2 }}
                 >
@@ -150,18 +154,53 @@ export default function ArtistPage() {
             </div>
           </motion.div>
         )}
+
+        {/* Exposiciones */}
+        {artist.exhibitions && artist.exhibitions.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className='mb-8'
+          >
+            <h2 className='text-3xl font-bold uppercase mb-6'>
+              {language === 'es' ? 'Exposiciones' : 'Exhibitions'}
+            </h2>
+            <div className='brutalist-grid mb-8'>
+              {artist.exhibitions.map((exh: any) => (
+                <ExhibitionCard key={exh._id} exhibition={exh} />
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Ferias */}
+        {artist.fairs && artist.fairs.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.48 }}
+            className='mb-8'
+          >
+            <h2 className='text-3xl font-bold uppercase mb-6'>
+              {language === 'es' ? 'Ferias' : 'Fairs'}
+            </h2>
+            <div className='brutalist-grid mb-8'>
+              {artist.fairs.map((fair: any) => (
+                <FairCard key={fair._id} fair={fair} />
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Noticias relacionadas */}
         {relatedNews.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
-            <RelatedNews
-              news={relatedNews}
-              title={
-                language === 'es' ? 'Noticias sobre el artista' : 'Artist News'
-              }
-            />
+            <RelatedNews news={relatedNews} title={undefined} />
           </motion.div>
         )}
       </div>

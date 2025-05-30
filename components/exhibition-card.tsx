@@ -25,7 +25,7 @@ export default function ExhibitionCard({ exhibition }: ExhibitionCardProps) {
         <div className='relative aspect-video w-full'>
           <Image
             src={exhibition.mainImage.url || '/placeholder.svg'}
-            alt={exhibition.mainImage.alt}
+            alt={exhibition.mainImage.alt || 'Imagen de exposición'}
             fill
             className='object-cover'
             sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'

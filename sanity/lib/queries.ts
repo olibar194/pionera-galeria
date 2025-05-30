@@ -53,7 +53,10 @@ export async function getArtist(slug: string, locale = 'es') {
     _id,
     name,
     "slug": slug.current,
-    "portraitImage": portraitImage.asset->url,
+    "portraitImage": {
+      "url": portraitImage.asset->url,
+      "alt": portraitImage.alt
+    },
     "portfolio": portfolio.asset->url,
     "highlights": highlights[]{ 
       "url": asset->url
@@ -73,18 +76,33 @@ export async function getArtist(slug: string, locale = 'es') {
       _id,
       "title": ${localizeField('title', locale)},
       "slug": slug.current,
-      "mainImage": mainImage.asset->url,
-      "startDate": startDate,
-      "endDate": endDate
-    },
-    "fairs": fairs[]-> {
-      _id,
-      "name": ${localizeField('name', locale)},
-      "slug": slug.current,
-      "mainImage": mainImage.asset->url,
+      "mainImage": {
+        "url": mainImage.asset->url,
+        "alt": mainImage.alt
+      },
       "startDate": startDate,
       "endDate": endDate,
       "location": ${localizeField('location', locale)}
+    },
+    "fairs": fairs[]-> {
+      _id,
+      "name": {
+        "es": name.es,
+        "en": name.en
+      },
+      "title": ${localizeField('title', locale)},
+      "slug": slug.current,
+      "mainImage": {
+        "url": mainImage.asset->url,
+        "alt": mainImage.alt
+      },
+      "startDate": startDate,
+      "endDate": endDate,
+      "location": {
+        "es": location.es,
+        "en": location.en
+      },
+      boothNumber
     }
   }`
 
