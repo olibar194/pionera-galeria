@@ -413,3 +413,57 @@ export async function getAllExhibitions(locale = 'es') {
   }`
   return await client.fetch(query)
 }
+
+// Get all fairs
+export async function getAllFairs(locale = 'es') {
+  const query = `*[_type == "fair"] | order(startDate desc) {
+    _id,
+    "name": {
+      "es": name.es,
+      "en": name.en
+    },
+    "slug": slug.current,
+    mainImage, // <--- return the full image object
+    startDate,
+    endDate,
+    "location": {
+      "es": location.es,
+      "en": location.en
+    },
+    boothNumber,
+    description,
+    artists[]->{
+      _id,
+      name,
+      "slug": slug.current,
+      "portraitImage": {
+        "url": portraitImage.asset->url,
+        "alt": portraitImage.alt
+      }
+    },
+    artworks[]->{
+      _id,
+      title,
+      year,
+      medium,
+      "image": {
+        "url": image.asset->url,
+        "alt": image.alt
+      },
+      artist->{ _id, name }
+    },
+    gallery[]{
+      "url": asset->url,
+      alt
+    },
+    videos[]{
+      title,
+      url,
+      "thumbnail": {
+        "url": thumbnail.asset->url,
+        "alt": thumbnail.alt
+      }
+    }
+  }`
+  return await client.fetch(query)
+}
