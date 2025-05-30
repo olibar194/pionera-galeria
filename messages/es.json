@@ -39,7 +39,11 @@
     "description": "Descripción",
     "curator": "Curador",
     "dates": "Fechas",
-    "location": "Ubicación"
+    "location": "Ubicación",
+    "gallery": "Galería",
+    "videos": "Videos",
+    "noArtworks": "No hay obras disponibles para este artista.",
+    "newsTitle": "Noticias Relacionadas"
   },
   "artists": {
     "title": "Artistas",

@@ -155,8 +155,12 @@ export async function getExhibition(slug: string, locale = 'es') {
   const query = `*[_type == "exhibition" && slug.current == $slug][0] {
     _id,
     "title": ${localizeField('title', locale)},
+    "subtitle": ${localizeField('subtitle', locale)},
     "slug": slug.current,
-    "mainImage": mainImage.asset->url,
+    mainImage {
+      asset,
+      alt
+    },
     "description": ${localizeField('description', locale)},
     "startDate": startDate,
     "endDate": endDate,
@@ -164,20 +168,56 @@ export async function getExhibition(slug: string, locale = 'es') {
     "location": ${localizeField('location', locale)},
     "curator": ${localizeField('curator', locale)},
     "gallery": gallery[]{ 
-      "url": asset->url
+      asset,
+      alt
     },
     "videos": videos[]{
       "title": ${localizeField('title', locale)},
       "url": url,
-      "thumbnail": thumbnail.asset->url
+      thumbnail {
+        asset,
+        alt
+      }
     },
     "artists": artists[]->{ 
       _id, 
       name,
       "slug": slug.current,
-      "portraitImage": portraitImage.asset->url
+      portraitImage {
+        asset,
+        alt
+      }
     },
-    "artworks": artworks[]->._id
+    "artworks": artworks[]->{
+      _id,
+      "title": ${localizeField('title', locale)},
+      "artist": artist->{_id, name},
+      "year": year,
+      "medium": ${localizeField('medium', locale)},
+      "dimensions": dimensions,
+      "image": image{asset,alt},
+      "description": ${localizeField('description', locale)},
+      "gallery": gallery[]{asset,alt},
+      "videos": videos[]{
+        "title": ${localizeField('title', locale)},
+        "url": url,
+        thumbnail{asset,alt}
+      }
+    },
+    "relatedNews": *[_type == 'news' && references(^._id)]|order(publicationDate desc){
+      _id,
+      title,
+      slug,
+      mainImage {
+        asset,
+        alt
+      },
+      summary,
+      publicationDate,
+      isExternalLink,
+      externalUrl,
+      internalLinkRef->{ _type, slug }
+    }
   }`
 
   return await client.fetch(query, { slug })
@@ -247,7 +287,10 @@ export async function getFairs(status: 'upcoming' | 'past', locale = 'es') {
       image { asset, alt },
       artist->{ _id, name }
     },
-    gallery[]{ asset, alt },
+    gallery[]{ 
+      asset,
+      alt
+    },
     videos[]{
       title,
       url,
@@ -262,52 +305,54 @@ export async function getFairs(status: 'upcoming' | 'past', locale = 'es') {
 export async function getFair(slug: string, locale = 'es') {
   const query = `*[_type == "fair" && slug.current == $slug][0] {
     _id,
-    name,
+    "name": ${localizeField('name', locale)},
     "slug": slug.current,
-    mainImage { asset, alt },
+    mainImage {
+      asset,
+      alt
+    },
     startDate,
     endDate,
-    location,
     boothNumber,
-    description,
-    artists[]->{
+    "location": ${localizeField('location', locale)},
+    "description": ${localizeField('description', locale)},
+    "gallery": gallery[]{
+      asset,
+      alt
+    },
+    "videos": videos[]{
+      "title": ${localizeField('title', locale)},
+      "url": url,
+      thumbnail {
+        asset,
+        alt
+      }
+    },
+    "artists": artists[]->{
       _id,
       name,
       "slug": slug.current,
-      portraitImage { asset, alt }
+      portraitImage {
+        asset,
+        alt
+      }
     },
-    artworks[]->{
-      _id,
-      title,
-      year,
-      medium,
-      image { asset, alt },
-      artist->{ _id, name }
-    },
-    gallery[]{ asset, alt },
-    videos[]{
-      title,
-      url,
-      thumbnail { asset, alt }
-    },
-    "relatedNews": *[_type == 'news' && references(^._id)] | order(publicationDate desc) {
+    "artworks": artworks[]->._id,
+    "relatedNews": *[_type == 'news' && references(^._id)]|order(publicationDate desc){
       _id,
       title,
       slug,
-      mainImage { asset, alt },
+      mainImage {
+        asset,
+        alt
+      },
       summary,
-      content,
       publicationDate,
       isExternalLink,
       externalUrl,
-      internalLinkRef->{ _type, slug },
-      relatedArtists[]->{ _id, name, slug },
-      relatedArtworks[]->{ _id, title, slug },
-      relatedExhibitions[]->{ _id, title, slug },
-      relatedFairs[]->{ _id, name, slug }
+      internalLinkRef->{ _type, slug }
     }
   }`
-
   return await client.fetch(query, { slug })
 }
 
@@ -414,7 +459,10 @@ export async function getAllExhibitions(locale = 'es') {
     "title": ${localizeField('title', locale)},
     "subtitle": ${localizeField('subtitle', locale)},
     "slug": slug.current,
-    mainImage,
+    mainImage {
+      asset,
+      alt
+    },
     startDate,
     endDate,
     "location": {

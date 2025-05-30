@@ -14,7 +14,9 @@ export default function ExhibitionCard({ exhibition }: ExhibitionCardProps) {
   const locale = useLocale() as 'es' | 'en'
 
   return (
-    <Link href={`/exposiciones/${exhibition.slug.current}`}>
+    <Link
+      href={`/exposiciones/${typeof exhibition.slug === 'string' ? exhibition.slug : exhibition.slug?.current || ''}`}
+    >
       <motion.div
         whileHover={{ y: -5 }}
         transition={{ duration: 0.2 }}

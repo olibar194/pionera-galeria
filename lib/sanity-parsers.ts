@@ -34,7 +34,13 @@ export function parseFair(fair: any) {
 export function parseExhibition(exh: any) {
   return {
     ...exh,
+    slug: typeof exh.slug === 'string' ? exh.slug : exh.slug?.current || '',
     mainImage: parseSanityImage(exh.mainImage),
+    gallery: (exh.gallery || []).map(parseSanityImage),
+    videos: (exh.videos || []).map((video: any) => ({
+      ...video,
+      thumbnail: parseSanityImage(video.thumbnail),
+    })),
     // Otros campos si es necesario
   }
 }

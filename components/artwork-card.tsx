@@ -1,11 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { useLanguage } from '@/components/language-provider'
-import { Card, CardContent } from '@/components/ui/card'
-import { getArtistById } from '@/lib/dummy-data'
-import { motion } from 'framer-motion'
+import BlockContent from '@/components/block-content'
 
 interface ArtworkCardProps {
   artwork: any
@@ -13,34 +10,52 @@ interface ArtworkCardProps {
 
 export default function ArtworkCard({ artwork }: ArtworkCardProps) {
   const { language } = useLanguage()
-  const artist = getArtistById(artwork.artist)
+  const getText = (field: any) => {
+    if (!field) return ''
+    if (typeof field === 'string') return field
+    return field[language] || field.es || field.en || ''
+  }
+  const title = getText(artwork.title)
+  const medium = getText(artwork.medium)
+  const dimensions = artwork.dimensions
+  const year = artwork.year
+  const descriptionBlocks = artwork.description
+    ? artwork.description[language] ||
+      artwork.description.es ||
+      artwork.description.en
+    : null
 
   return (
-    <Link href={`/obras/${artwork._id}`}>
-      <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.3 }}>
-        <Card className='overflow-hidden border-0 shadow-sm transition-shadow hover:shadow-md'>
-          <div className='relative aspect-square w-full overflow-hidden'>
-            <Image
-              src={artwork.image.url || '/placeholder.svg'}
-              alt={artwork.image.alt}
-              fill
-              className='object-cover'
-              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-            />
-          </div>
-          <CardContent className='p-4'>
-            <h3 className='text-lg font-medium'>
-              {language === 'es' ? artwork.title.es : artwork.title.en}
-            </h3>
-            <p className='text-sm text-text-secondary'>
-              {artist?.name}, {artwork.year}
-            </p>
-            <p className='text-xs text-text-secondary'>
-              {language === 'es' ? artwork.medium.es : artwork.medium.en}
-            </p>
-          </CardContent>
-        </Card>
-      </motion.div>
-    </Link>
+    <div className='bg-white dark:bg-black overflow-hidden p-2'>
+      <div className='relative aspect-[4/5] w-full overflow-hidden group'>
+        <Image
+          src={artwork.image?.url || '/placeholder.svg'}
+          alt={artwork.image?.alt || title || 'Artwork image'}
+          fill
+          className='object-cover transition-transform duration-300 group-hover:scale-105'
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+        />
+      </div>
+      <div className='pt-2'>
+        <h3 className='text-lg font-bold uppercase truncate mb-1'>
+          {title || 'Untitled'}
+        </h3>
+        <div className='text-sm text-gray-700 dark:text-gray-300 mb-1'>
+          {year && <span>{year}</span>}
+          {year && medium && <span>, </span>}
+          {medium && <span>{medium}</span>}
+        </div>
+        {dimensions && (
+          <div className='text-xs text-gray-500 mb-1'>{dimensions}</div>
+        )}
+        {descriptionBlocks &&
+          Array.isArray(descriptionBlocks) &&
+          descriptionBlocks.length > 0 && (
+            <div className='mt-2'>
+              <BlockContent blocks={descriptionBlocks} />
+            </div>
+          )}
+      </div>
+    </div>
   )
 }

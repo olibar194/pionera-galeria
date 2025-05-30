@@ -11,6 +11,7 @@ import { getTranslations } from 'next-intl/server'
 import Image from 'next/image'
 import BlockContent from '@/components/block-content'
 import RelatedNews from '@/components/related-news'
+import ArtworkCard from '@/components/artwork-card'
 
 export default async function FairPage({
   params,
@@ -37,6 +38,8 @@ export default async function FairPage({
       artworksByArtist[artistId].push(artwork)
     })
   }
+  console.log('artworksByArtist', artworksByArtist)
+
   // Noticias relacionadas
   const relatedNews = fair.relatedNews || []
   return (
@@ -92,31 +95,7 @@ export default async function FairPage({
             artworksByArtist[artist._id].length > 0 ? (
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                 {artworksByArtist[artist._id].map((artwork: any) => (
-                  <div key={artwork._id} className='group'>
-                    <div className='relative aspect-square overflow-hidden'>
-                      <Image
-                        src={artwork.image?.url || '/placeholder.svg'}
-                        alt={artwork.image?.alt || ''}
-                        fill
-                        className='object-cover transition-transform duration-500 group-hover:scale-105'
-                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                      />
-                      <div className='absolute inset-0 bg-blue-600 mix-blend-multiply opacity-0 group-hover:opacity-30 transition-opacity duration-300' />
-                    </div>
-                    <div className='mt-4'>
-                      <h3 className='text-lg font-bold'>
-                        {artwork.title?.es ||
-                          artwork.title?.en ||
-                          artwork.title}
-                      </h3>
-                      <p className='mt-1 text-sm opacity-70'>
-                        {artwork.year},{' '}
-                        {artwork.medium?.es ||
-                          artwork.medium?.en ||
-                          artwork.medium}
-                      </p>
-                    </div>
-                  </div>
+                  <ArtworkCard key={artwork._id} artwork={artwork} />
                 ))}
               </div>
             ) : (
