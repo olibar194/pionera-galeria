@@ -22,6 +22,7 @@ export default function Header() {
   // you can use the following condition:
 
   const isHome = pathname === '/' || pathname === '/en'
+  const forceDark = isHome && !scrolled
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,13 +64,13 @@ export default function Header() {
       } top-0 z-40 w-full transition-all duration-300 ${
         scrolled || !isHome
           ? 'bg-white dark:bg-black border-b border-black/10 dark:border-white/10 backdrop-blur-sm'
-          : 'bg-transparent'
+          : 'bg-transparent dark' // Added 'dark' to force dark-theme appearance for children on home (unscrolled)
       }`}
     >
       <div className='container mx-auto px-4 py-4'>
         <div className='flex items-center justify-between'>
           <Link href='/' className='flex items-center'>
-            <Logo />
+            <Logo forceDark={forceDark} />
           </Link>
 
           <div className='flex items-center'>
