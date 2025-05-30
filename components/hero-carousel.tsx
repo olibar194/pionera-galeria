@@ -61,10 +61,29 @@ export default function HeroCarousel({ exhibitions }: HeroCarouselProps) {
 
       <AnimatePresence mode='wait'>
         {exhibitions.map((exhibition, index) => {
+          // Defensive checks for mainImage and slug
+          const mainImage = exhibition.mainImage || {}
+          const imageUrl = mainImage.url || '/placeholder.svg'
+          const imageAlt = mainImage.alt || 'Exhibition image'
+          const slug =
+            typeof exhibition.slug === 'string'
+              ? exhibition.slug
+              : exhibition.slug?.current || ''
+          const title =
+            locale === 'es'
+              ? exhibition.title?.es || exhibition.title
+              : exhibition.title?.en || exhibition.title || ''
+          const subtitle =
+            exhibition.subtitle
+              ? locale === 'es'
+                ? exhibition.subtitle?.es || exhibition.subtitle
+                : exhibition.subtitle?.en || exhibition.subtitle
+              : ''
+
           return (
             index === current && (
               <motion.div
-                key={exhibition._id}
+                key={exhibition._id || index}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -73,8 +92,8 @@ export default function HeroCarousel({ exhibitions }: HeroCarouselProps) {
               >
                 <div className='relative h-full w-full'>
                   <Image
-                    src={exhibition.mainImage.url || '/placeholder.svg'}
-                    alt={exhibition.mainImage.alt}
+                    src={exhibition.mainImage?.url || '/placeholder.svg'}
+                    alt={exhibition.mainImage?.alt || 'Exhibition image'}
                     fill
                     className='object-cover'
                     priority
@@ -96,20 +115,16 @@ export default function HeroCarousel({ exhibitions }: HeroCarouselProps) {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: 0.3 }}
                     >
-                      {locale === 'es'
-                        ? exhibition.title.es
-                        : exhibition.title.en}
+                      {title}
                     </motion.h1>
-                    {exhibition.subtitle && (
+                    {subtitle && (
                       <motion.p
                         className='mb-6 text-xl md:text-2xl'
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.5 }}
                       >
-                        {locale === 'es'
-                          ? exhibition.subtitle.es
-                          : exhibition.subtitle.en}
+                        {subtitle}
                       </motion.p>
                     )}
                     <motion.p
@@ -126,11 +141,13 @@ export default function HeroCarousel({ exhibitions }: HeroCarouselProps) {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: 0.9 }}
                     >
-                      <Link href={`/exposiciones/${exhibition.slug.current}`}>
-                        <Button className='h-14 border-2 border-white bg-transparent px-8 text-lg uppercase hover:bg-white hover:text-black'>
-                          {t('viewExhibition')}
-                        </Button>
-                      </Link>
+                      {slug && (
+                        <Link href={`/exposiciones/${typeof exhibition.slug === 'string' ? exhibition.slug : exhibition.slug?.current || ''}`}>
+                          <Button className='h-14 border-2 border-white bg-transparent px-8 text-lg uppercase hover:bg-white hover:text-black'>
+                            {t('viewExhibition')}
+                          </Button>
+                        </Link>
+                      )}
                     </motion.div>
                   </div>
                 </div>

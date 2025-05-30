@@ -1,8 +1,14 @@
 import { client } from './client'
 
-// Helper function to get localized field with fallback to Spanish
+// Helper function to get localized field with fallback to es, en, or base
 const localizeField = (field: string, locale: string) => {
-  return `coalesce(${field}.${locale}, ${field}.es)`
+  if (locale === 'es') {
+    return `coalesce(${field}.es, ${field}.en, ${field})`
+  } else if (locale === 'en') {
+    return `coalesce(${field}.en, ${field}.es, ${field})`
+  } else {
+    return `coalesce(${field}.${locale}, ${field}.es, ${field}.en, ${field})`
+  }
 }
 
 // Get exhibition highlights for homepage
@@ -389,5 +395,21 @@ export async function getNews(locale = 'es', filterObj: NewsFilter = {}) {
     relatedFairs[]->{ _id, name, slug }
   }`
 
+  return await client.fetch(query)
+}
+
+// Get all exhibitions for homepage carousel
+export async function getAllExhibitions(locale = 'es') {
+  const query = `*[_type == "exhibition"] | order(startDate desc) {
+    _id,
+    "title": ${localizeField('title', locale)},
+    "subtitle": ${localizeField('subtitle', locale)},
+    "slug": slug.current,
+    mainImage,
+    startDate,
+    endDate,
+    artists[]->{ _id, name, "slug": slug.current, portraitImage },
+    "description": ${localizeField('description', locale)}
+  }`
   return await client.fetch(query)
 }
