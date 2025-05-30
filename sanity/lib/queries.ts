@@ -210,12 +210,34 @@ export async function getFairs(status: 'upcoming' | 'past', locale = 'es') {
 
   const query = `*[_type == "fair" && ${dateFilter}] | order(startDate ${status === 'past' ? 'desc' : 'asc'}) {
     _id,
-    "name": ${localizeField('name', locale)},
+    name,
     "slug": slug.current,
-    "mainImage": mainImage.asset->url,
-    "startDate": startDate,
-    "endDate": endDate,
-    "location": ${localizeField('location', locale)}
+    mainImage { asset, alt },
+    startDate,
+    endDate,
+    location,
+    boothNumber,
+    description,
+    artists[]->{
+      _id,
+      name,
+      "slug": slug.current,
+      portraitImage { asset, alt }
+    },
+    artworks[]->{
+      _id,
+      title,
+      year,
+      medium,
+      image { asset, alt },
+      artist->{ _id, name }
+    },
+    gallery[]{ asset, alt },
+    videos[]{
+      title,
+      url,
+      thumbnail { asset, alt }
+    }
   }`
 
   return await client.fetch(query)
@@ -225,29 +247,50 @@ export async function getFairs(status: 'upcoming' | 'past', locale = 'es') {
 export async function getFair(slug: string, locale = 'es') {
   const query = `*[_type == "fair" && slug.current == $slug][0] {
     _id,
-    "name": ${localizeField('name', locale)},
+    name,
     "slug": slug.current,
-    "mainImage": mainImage.asset->url,
-    "description": ${localizeField('description', locale)},
-    "startDate": startDate,
-    "endDate": endDate,
-    "location": ${localizeField('location', locale)},
-    "boothNumber": boothNumber,
-    "gallery": gallery[]{ 
-      "url": asset->url
-    },
-    "videos": videos[]{
-      "title": ${localizeField('title', locale)},
-      "url": url,
-      "thumbnail": thumbnail.asset->url
-    },
-    "artists": artists[]->{ 
-      _id, 
+    mainImage { asset, alt },
+    startDate,
+    endDate,
+    location,
+    boothNumber,
+    description,
+    artists[]->{
+      _id,
       name,
       "slug": slug.current,
-      "portraitImage": portraitImage.asset->url
+      portraitImage { asset, alt }
     },
-    "artworks": artworks[]->._id
+    artworks[]->{
+      _id,
+      title,
+      year,
+      medium,
+      image { asset, alt },
+      artist->{ _id, name }
+    },
+    gallery[]{ asset, alt },
+    videos[]{
+      title,
+      url,
+      thumbnail { asset, alt }
+    },
+    "relatedNews": *[_type == 'news' && references(^._id)] | order(publicationDate desc) {
+      _id,
+      title,
+      slug,
+      mainImage { asset, alt },
+      summary,
+      content,
+      publicationDate,
+      isExternalLink,
+      externalUrl,
+      internalLinkRef->{ _type, slug },
+      relatedArtists[]->{ _id, name, slug },
+      relatedArtworks[]->{ _id, title, slug },
+      relatedExhibitions[]->{ _id, title, slug },
+      relatedFairs[]->{ _id, name, slug }
+    }
   }`
 
   return await client.fetch(query, { slug })
@@ -310,4 +353,41 @@ export async function getDossier(slug: string, locale = 'es') {
   }`
 
   return await client.fetch(query, { slug })
+}
+
+// Get news (optionally filtered by related entity)
+type NewsFilter = {
+  relatedFairId?: string
+  relatedExhibitionId?: string
+  relatedArtistId?: string
+}
+
+export async function getNews(locale = 'es', filterObj: NewsFilter = {}) {
+  let filter = '*[_type == "news"'
+  if (filterObj.relatedFairId)
+    filter += ` && references('${filterObj.relatedFairId}')`
+  if (filterObj.relatedExhibitionId)
+    filter += ` && references('${filterObj.relatedExhibitionId}')`
+  if (filterObj.relatedArtistId)
+    filter += ` && references('${filterObj.relatedArtistId}')`
+  filter += '] | order(publicationDate desc)'
+
+  const query = `${filter} {
+    _id,
+    title,
+    slug,
+    mainImage { asset, alt },
+    summary,
+    content,
+    publicationDate,
+    isExternalLink,
+    externalUrl,
+    internalLinkRef->{ _type, slug },
+    relatedArtists[]->{ _id, name, slug },
+    relatedArtworks[]->{ _id, title, slug },
+    relatedExhibitions[]->{ _id, title, slug },
+    relatedFairs[]->{ _id, name, slug }
+  }`
+
+  return await client.fetch(query)
 }

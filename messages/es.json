@@ -62,7 +62,9 @@
     "description": "Descripción",
     "booth": "Stand",
     "dates": "Fechas",
-    "location": "Ubicación"
+    "location": "Ubicación",
+    "noArtworks": "No hay obras disponibles para este artista.",
+    "newsTitle": "Noticias Relacionadas"
   },
   "news": {
     "title": "Noticias",

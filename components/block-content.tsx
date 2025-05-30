@@ -1,29 +1,23 @@
-"use client"
+'use client'
+import { PortableText, PortableTextComponents } from '@portabletext/react'
 
 interface BlockContentProps {
   blocks: any[]
+}
+
+const components: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => <p>{children}</p>,
+  },
 }
 
 export default function BlockContent({ blocks }: BlockContentProps) {
   if (!blocks || !Array.isArray(blocks)) {
     return null
   }
-
   return (
-    <div className="prose prose-gray max-w-none dark:prose-invert">
-      {blocks.map((block, index) => {
-        // Simple implementation for the dummy data structure
-        if (block._type === "block") {
-          return (
-            <p key={index} className="mb-4">
-              {block.children.map((child: any, childIndex: number) => (
-                <span key={childIndex}>{child.text}</span>
-              ))}
-            </p>
-          )
-        }
-        return null
-      })}
+    <div className='prose prose-gray max-w-none dark:prose-invert'>
+      <PortableText value={blocks} components={components} />
     </div>
   )
 }

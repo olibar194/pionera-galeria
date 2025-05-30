@@ -14,7 +14,7 @@ export default function FairCard({ fair }: FairCardProps) {
   const locale = useLocale() as 'es' | 'en'
 
   return (
-    <Link href={`/ferias/${fair.slug.current}`}>
+    <Link href={`/ferias/${fair.slug}`}>
       <motion.div
         whileHover={{ y: -5 }}
         transition={{ duration: 0.2 }}
