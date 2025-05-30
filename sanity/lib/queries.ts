@@ -316,28 +316,34 @@ export async function getFair(slug: string, locale = 'es') {
     boothNumber,
     "location": ${localizeField('location', locale)},
     "description": ${localizeField('description', locale)},
-    "gallery": gallery[]{
-      asset,
-      alt
-    },
+    "gallery": gallery[]{ asset, alt },
     "videos": videos[]{
       "title": ${localizeField('title', locale)},
       "url": url,
-      thumbnail {
-        asset,
-        alt
-      }
+      thumbnail { asset, alt }
     },
     "artists": artists[]->{
       _id,
       name,
       "slug": slug.current,
-      portraitImage {
-        asset,
-        alt
+      portraitImage { asset, alt }
+    },
+    "artworks": artworks[]->{
+      _id,
+      "title": ${localizeField('title', locale)},
+      "artist": artist->{_id, name},
+      "year": year,
+      "medium": ${localizeField('medium', locale)},
+      "dimensions": dimensions,
+      "image": image{asset,alt},
+      "description": ${localizeField('description', locale)},
+      "gallery": gallery[]{asset,alt},
+      "videos": videos[]{
+        "title": ${localizeField('title', locale)},
+        "url": url,
+        thumbnail{asset,alt}
       }
     },
-    "artworks": artworks[]->._id,
     "relatedNews": *[_type == 'news' && references(^._id)]|order(publicationDate desc){
       _id,
       title,
