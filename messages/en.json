@@ -62,7 +62,8 @@
     "description": "Description",
     "booth": "Booth",
     "dates": "Dates",
-    "location": "Location"
+    "location": "Location",
+    "newsTitle": "Related News"
   },
   "news": {
     "title": "News",

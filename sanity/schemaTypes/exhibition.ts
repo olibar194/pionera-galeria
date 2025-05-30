@@ -18,7 +18,6 @@ export default {
           name: 'en',
           title: 'English',
           type: 'string',
-          validation: (Rule) => Rule.required(),
         },
       ],
       validation: (Rule) => Rule.required(),
@@ -92,19 +91,7 @@ export default {
     {
       name: 'openingHours',
       title: 'Opening Hours',
-      type: 'object',
-      fields: [
-        {
-          name: 'es',
-          title: 'Spanish',
-          type: 'string',
-        },
-        {
-          name: 'en',
-          title: 'English',
-          type: 'string',
-        },
-      ],
+      type: 'string',
     },
     {
       name: 'location',
@@ -126,19 +113,7 @@ export default {
     {
       name: 'curator',
       title: 'Curator',
-      type: 'object',
-      fields: [
-        {
-          name: 'es',
-          title: 'Spanish',
-          type: 'string',
-        },
-        {
-          name: 'en',
-          title: 'English',
-          type: 'string',
-        },
-      ],
+      type: 'string',
     },
     {
       name: 'artists',

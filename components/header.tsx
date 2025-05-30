@@ -4,7 +4,12 @@ import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
 import Logo from '@/components/ui/logo'
 import LanguageSwitcher from '@/components/ui/language-switcher'
@@ -22,6 +27,8 @@ export default function Header() {
   // you can use the following condition:
 
   const isHome = pathname === '/' || pathname === '/en'
+  // Solo forzar dark en home y sin scroll, en otras rutas usar el theme normal
+  const forceDark = isHome && !scrolled ? true : undefined
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,13 +70,13 @@ export default function Header() {
       } top-0 z-40 w-full transition-all duration-300 ${
         scrolled || !isHome
           ? 'bg-white dark:bg-black border-b border-black/10 dark:border-white/10 backdrop-blur-sm'
-          : 'bg-transparent'
+          : 'bg-transparent dark' // Added 'dark' to force dark-theme appearance for children on home (unscrolled)
       }`}
     >
       <div className='container mx-auto px-4 py-4'>
         <div className='flex items-center justify-between'>
           <Link href='/' className='flex items-center'>
-            <Logo />
+            <Logo forceDark={forceDark} key={pathname} />
           </Link>
 
           <div className='flex items-center'>
@@ -110,11 +117,15 @@ export default function Header() {
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild className='md:hidden'>
                 <Button
-                  variant='outline'
+                  variant='ghost'
                   size='icon'
-                  className='border-2 border-black dark:border-white'
+                  className={
+                    forceDark
+                      ? 'bg-transparent border-2 border-white'
+                      : 'border-2 border-black dark:border-white'
+                  }
                 >
-                  <Menu size={24} />
+                  <Menu size={24} color={forceDark ? 'white' : undefined} />
                   <span className='sr-only'>{t('toggleMenu', 'Menu')}</span>
                 </Button>
               </SheetTrigger>
@@ -122,6 +133,9 @@ export default function Header() {
                 side='right'
                 className='w-[300px] sm:w-[400px] border-l-2 border-black dark:border-white bg-white dark:bg-black'
               >
+                <span className='sr-only'>
+                  <SheetTitle>Menú principal</SheetTitle>
+                </span>
                 <nav className='flex flex-col space-y-0 mt-8'>
                   {navItems.map((item) => (
                     <Link

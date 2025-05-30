@@ -5,7 +5,11 @@ import { useTheme } from 'next-themes'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
-export default function Logo() {
+interface LogoProps {
+  forceDark?: boolean
+}
+
+export default function Logo({ forceDark }: LogoProps) {
   const { theme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
@@ -17,7 +21,7 @@ export default function Logo() {
     return <div className='h-10 w-48' />
   }
 
-  const isDark = theme === 'dark'
+  const isDark = forceDark || theme === 'dark'
 
   return (
     <motion.div

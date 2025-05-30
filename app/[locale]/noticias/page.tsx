@@ -1,20 +1,36 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import NewsCard from '@/components/news-card'
-import { getLatestNews } from '@/lib/news-data'
+import { getAllNews } from '@/sanity/lib/news-queries'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 
 export default function NewsPage() {
   const t = useTranslations('news')
   const tPages = useTranslations('pages')
-  const allNews = getLatestNews(100) // Get all news, we'll handle pagination client-side
+  const [allNews, setAllNews] = useState<any[]>([])
   const [visibleNews, setVisibleNews] = useState(6)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getAllNews().then((news: any[]) => {
+      setAllNews(news)
+      setLoading(false)
+    })
+  }, [])
 
   const loadMore = () => {
-    setVisibleNews((prev) => Math.min(prev + 6, allNews.length))
+    setVisibleNews((prev: number) => Math.min(prev + 6, allNews.length))
+  }
+
+  if (loading) {
+    return (
+      <div className='container mx-auto px-4 py-32 text-center'>
+        <p>Cargando...</p>
+      </div>
+    )
   }
 
   return (
@@ -34,7 +50,7 @@ export default function NewsPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        {allNews.slice(0, visibleNews).map((news) => (
+        {allNews.slice(0, visibleNews).map((news: any) => (
           <NewsCard key={news._id} news={news} />
         ))}
       </motion.div>

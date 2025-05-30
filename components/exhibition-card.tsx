@@ -14,7 +14,9 @@ export default function ExhibitionCard({ exhibition }: ExhibitionCardProps) {
   const locale = useLocale() as 'es' | 'en'
 
   return (
-    <Link href={`/exposiciones/${exhibition.slug.current}`}>
+    <Link
+      href={`/exposiciones/${typeof exhibition.slug === 'string' ? exhibition.slug : exhibition.slug?.current || ''}`}
+    >
       <motion.div
         whileHover={{ y: -5 }}
         transition={{ duration: 0.2 }}
@@ -23,22 +25,20 @@ export default function ExhibitionCard({ exhibition }: ExhibitionCardProps) {
         <div className='relative aspect-video w-full'>
           <Image
             src={exhibition.mainImage.url || '/placeholder.svg'}
-            alt={exhibition.mainImage.alt}
+            alt={exhibition.mainImage.alt || 'Imagen de exposición'}
             fill
             className='object-cover'
             sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           />
         </div>
         <div className='p-4'>
-          <h3 className='text-xl font-bold uppercase'>
-            {locale === 'es' ? exhibition.title.es : exhibition.title.en}
-          </h3>
+          <h3 className='text-xl font-bold uppercase'>{exhibition.title}</h3>
           <p className='mt-2 text-sm'>
             {formatDate(exhibition.startDate, locale)} -{' '}
             {formatDate(exhibition.endDate, locale)}
           </p>
           <p className='mt-1 text-sm'>
-            {locale === 'es' ? exhibition.location.es : exhibition.location.en}
+            {exhibition.location?.es || exhibition.location?.en || ''}
           </p>
         </div>
       </motion.div>
