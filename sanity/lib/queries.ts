@@ -209,7 +209,10 @@ export async function getExhibition(slug: string, locale = 'es') {
     "artworks": artworks[]->{
       _id,
       "title": ${localizeField('title', locale)},
-      "artist": artist->{_id, name},
+      "artist": {
+        "_id": artist->._id,
+        "name": artist->name
+      },
       "year": year,
       "medium": ${localizeField('medium', locale)},
       "dimensions": dimensions,
@@ -355,7 +358,25 @@ export async function getFair(slug: string, locale = 'es') {
         alt
       }
     },
-    "artworks": artworks[]->._id,
+    "artworks": artworks[]->{
+      _id,
+      "title": ${localizeField('title', locale)},
+      "artist": {
+        "_id": artist->._id,
+        "name": artist->name
+      },
+      "year": year,
+      "medium": ${localizeField('medium', locale)},
+      "dimensions": dimensions,
+      "image": image{asset,alt},
+      "description": ${localizeField('description', locale)},
+      "gallery": gallery[]{asset,alt},
+      "videos": videos[]{
+        "title": ${localizeField('title', locale)},
+        "url": url,
+        thumbnail{asset,alt}
+      }
+    },
     "relatedNews": *[_type == 'news' && references(^._id)]|order(publicationDate desc){
       _id,
       title,

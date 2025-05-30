@@ -4,7 +4,12 @@ import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
 import Logo from '@/components/ui/logo'
 import LanguageSwitcher from '@/components/ui/language-switcher'
@@ -112,11 +117,15 @@ export default function Header() {
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild className='md:hidden'>
                 <Button
-                  variant='outline'
+                  variant='ghost'
                   size='icon'
-                  className='border-2 border-black dark:border-white'
+                  className={
+                    forceDark
+                      ? 'bg-transparent border-2 border-white'
+                      : 'border-2 border-black dark:border-white'
+                  }
                 >
-                  <Menu size={24} />
+                  <Menu size={24} color={forceDark ? 'white' : undefined} />
                   <span className='sr-only'>{t('toggleMenu', 'Menu')}</span>
                 </Button>
               </SheetTrigger>
@@ -124,6 +133,9 @@ export default function Header() {
                 side='right'
                 className='w-[300px] sm:w-[400px] border-l-2 border-black dark:border-white bg-white dark:bg-black'
               >
+                <span className='sr-only'>
+                  <SheetTitle>Menú principal</SheetTitle>
+                </span>
                 <nav className='flex flex-col space-y-0 mt-8'>
                   {navItems.map((item) => (
                     <Link
