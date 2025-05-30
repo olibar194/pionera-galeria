@@ -12,7 +12,6 @@ import Image from 'next/image'
 import BlockContent from '@/components/block-content'
 import RelatedNews from '@/components/related-news'
 import ArtworkCard from '@/components/artwork-card'
-import ArtworksByArtist from '@/components/artworks-by-artist'
 
 export default async function FairPage({
   params,
@@ -89,13 +88,25 @@ export default async function FairPage({
           </div>
         </div>
         {/* Artworks by Artist */}
-        <ArtworksByArtist
-          artists={artists}
-          artworks={fair.artworks || []}
-          noArtworksText={t('noArtworks', {
-            fallback: 'No hay obras disponibles para este artista.',
-          })}
-        />
+        {artists.map((artist: any) => (
+          <div key={artist._id} className='mb-16'>
+            <h2 className='text-3xl font-bold uppercase mb-6'>{artist.name}</h2>
+            {artworksByArtist[artist._id] &&
+            artworksByArtist[artist._id].length > 0 ? (
+              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                {artworksByArtist[artist._id].map((artwork: any) => (
+                  <ArtworkCard key={artwork._id} artwork={artwork} />
+                ))}
+              </div>
+            ) : (
+              <p>
+                {t('noArtworks', {
+                  fallback: 'No hay obras disponibles para este artista.',
+                })}
+              </p>
+            )}
+          </div>
+        ))}
         {relatedNews.length > 0 && (
           <div className='mt-16'>
             <RelatedNews news={relatedNews} title={t('newsTitle')} />

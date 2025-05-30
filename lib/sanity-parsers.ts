@@ -26,7 +26,6 @@ export function parseFair(fair: any) {
   return {
     ...fair,
     mainImage: parseSanityImage(fair.mainImage),
-    artworks: (fair.artworks || []).map(parseArtwork),
     // Puedes agregar aquí otros campos normalizados si hace falta
   }
 }
