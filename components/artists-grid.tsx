@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import { useLocale, useTranslations } from 'next-intl'
@@ -75,50 +75,6 @@ export default function ArtistsGrid({ artists }: { artists: Artist[] }) {
           </Link>
         ))}
       </motion.div>
-
-      {/* Hover Preview */}
-      <AnimatePresence>
-        {hoveredArtist && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.3 }}
-            className='fixed left-0 top-0 w-screen h-screen pointer-events-none z-50'
-          >
-            {artists
-              .filter(
-                (artist) =>
-                  artist._id === hoveredArtist &&
-                  Array.isArray(artist.highlights) &&
-                  artist.highlights.length > 0
-              )
-              .map((artist) => (
-                <div
-                  key={artist._id}
-                  className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[40vh] h-[40vh]'
-                >
-                  <div className='relative w-full h-full overflow-hidden'>
-                    <Image
-                      src={
-                        (artist.highlights && artist.highlights[0]?.url) ||
-                        '/placeholder.svg'
-                      }
-                      alt={
-                        (artist.highlights && artist.highlights[0]?.alt) ||
-                        artist.name
-                      }
-                      fill
-                      className='object-cover'
-                      sizes='40vh'
-                    />
-                    <div className='absolute inset-0 bg-blue-600 mix-blend-multiply opacity-20' />
-                  </div>
-                </div>
-              ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }

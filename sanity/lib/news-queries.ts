@@ -41,3 +41,24 @@ export async function getNewsBySlug(slug: string, locale = 'es') {
   }`
   return await client.fetch(query, { slug })
 }
+
+// Get news filtered by related artist
+export async function getNewsByArtist(artistId: string, locale = 'es') {
+  const query = `*[_type == "news" && references($artistId)] | order(publicationDate desc) {
+    _id,
+    title,
+    slug,
+    mainImage { asset->{url}, alt },
+    summary,
+    publicationDate,
+    isExternalLink,
+    externalUrl,
+    internalLinkRef->{ _type, slug },
+    content,
+    relatedArtists[]->{ _id, name, slug },
+    relatedArtworks[]->{ _id, title, slug },
+    relatedExhibitions[]->{ _id, title, slug },
+    relatedFairs[]->{ _id, name, slug }
+  }`
+  return await client.fetch(query, { artistId })
+}
