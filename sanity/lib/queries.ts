@@ -408,6 +408,10 @@ export async function getAllExhibitions(locale = 'es') {
     mainImage,
     startDate,
     endDate,
+    "location": {
+      "es": location.es,
+      "en": location.en
+    },
     artists[]->{ _id, name, "slug": slug.current, portraitImage },
     "description": ${localizeField('description', locale)}
   }`

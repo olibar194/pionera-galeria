@@ -30,15 +30,13 @@ export default function ExhibitionCard({ exhibition }: ExhibitionCardProps) {
           />
         </div>
         <div className='p-4'>
-          <h3 className='text-xl font-bold uppercase'>
-            {locale === 'es' ? exhibition.title.es : exhibition.title.en}
-          </h3>
+          <h3 className='text-xl font-bold uppercase'>{exhibition.title}</h3>
           <p className='mt-2 text-sm'>
             {formatDate(exhibition.startDate, locale)} -{' '}
             {formatDate(exhibition.endDate, locale)}
           </p>
           <p className='mt-1 text-sm'>
-            {locale === 'es' ? exhibition.location.es : exhibition.location.en}
+            {exhibition.location?.es || exhibition.location?.en || ''}
           </p>
         </div>
       </motion.div>
