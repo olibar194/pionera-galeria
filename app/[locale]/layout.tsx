@@ -20,7 +20,7 @@ const robotoCondensed = Roboto_Condensed({
 export const metadata: Metadata = {
   title: 'PIONERA GALERÍA',
   description: 'Galería de arte contemporáneo',
-  generator: 'v0.dev',
+  generator: 'olibar194',
 }
 
 export function generateStaticParams() {
