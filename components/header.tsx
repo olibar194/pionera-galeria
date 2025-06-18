@@ -45,6 +45,7 @@ export default function Header() {
     { href: '/ferias', label: t('fairs') },
     { href: '/noticias', label: t('news') },
     { href: '/contacto', label: t('contact') },
+    { href: '/residencias', label: t('residency', { default: 'Residencias' }) },
   ]
 
   const navVariants = {
