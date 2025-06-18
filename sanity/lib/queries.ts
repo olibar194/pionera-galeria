@@ -567,3 +567,21 @@ export async function getAllFairs(locale = 'es') {
   }`
   return await client.fetch(query)
 }
+
+// Get residency information
+export async function getResidency(locale = 'es') {
+  const query = `*[_type == "residency"][0]{
+    "title": ${localizeField('title', locale)},
+    "subtitle": ${localizeField('subtitle', locale)},
+    "mainImage": {
+      "url": mainImage.asset->url,
+      "alt": mainImage.alt
+    },
+    "gallery": gallery[]{
+      "url": asset->url,
+      "alt": alt
+    },
+    "description": ${localizeField('description', locale)}
+  }`
+  return await client.fetch(query)
+}

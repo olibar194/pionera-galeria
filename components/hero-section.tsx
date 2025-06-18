@@ -12,7 +12,16 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ exhibition }: HeroSectionProps) {
+  // Permitir que title/subtitle sean string o {es, en}
   const { language } = useLanguage()
+  const getText = (field: any) => {
+    if (!field) return ''
+    if (typeof field === 'string') return field
+    if (typeof field === 'object') {
+      return field[language] || field['es'] || field['en'] || ''
+    }
+    return ''
+  }
 
   // Variants for staggered animations
   const container = {
@@ -61,8 +70,8 @@ export default function HeroSection({ exhibition }: HeroSectionProps) {
       {/* Background Image with blend mode */}
       <div className='absolute inset-0'>
         <Image
-          src={exhibition.mainImage.url || '/placeholder.svg'}
-          alt={exhibition.mainImage.alt}
+          src={exhibition.mainImage?.url || '/placeholder.svg'}
+          alt={exhibition.mainImage?.alt || ''}
           fill
           className='object-cover'
           priority
@@ -100,26 +109,30 @@ export default function HeroSection({ exhibition }: HeroSectionProps) {
             className='mb-2 font-display text-5xl font-bold md:text-6xl lg:text-7xl'
             variants={item}
           >
-            {language === 'es' ? exhibition.title.es : exhibition.title.en}
+            {getText(exhibition.title)}
           </motion.h1>
           {exhibition.subtitle && (
             <motion.p className='mb-4 text-xl md:text-2xl' variants={item}>
-              {language === 'es'
-                ? exhibition.subtitle.es
-                : exhibition.subtitle.en}
+              {getText(exhibition.subtitle)}
             </motion.p>
           )}
-          <motion.p className='mb-6 text-lg' variants={item}>
-            {formatDate(exhibition.startDate, language)} -{' '}
-            {formatDate(exhibition.endDate, language)}
-          </motion.p>
-          <motion.div variants={item}>
-            <Link href={`/exposiciones/${exhibition.slug.current}`}>
-              <Button className='bg-impact-fuchsia hover:bg-impact-fuchsia/90 text-lg px-6 py-6'>
-                Descubrir Exposición
-              </Button>
-            </Link>
-          </motion.div>
+          {/* Solo mostrar fechas si existen */}
+          {exhibition.startDate && exhibition.endDate && (
+            <motion.p className='mb-6 text-lg' variants={item}>
+              {formatDate(exhibition.startDate, language)} -{' '}
+              {formatDate(exhibition.endDate, language)}
+            </motion.p>
+          )}
+          {/* Solo mostrar botón si existe slug */}
+          {exhibition.slug?.current && (
+            <motion.div variants={item}>
+              <Link href={`/exposiciones/${exhibition.slug.current}`}>
+                <Button className='bg-impact-fuchsia hover:bg-impact-fuchsia/90 text-lg px-6 py-6'>
+                  Descubrir Exposición
+                </Button>
+              </Link>
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </section>
