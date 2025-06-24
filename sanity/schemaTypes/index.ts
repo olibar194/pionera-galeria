@@ -5,6 +5,7 @@ import fair from './fair'
 import dossier from './dossier'
 import news from './news'
 import residency from './residency'
+import cala from './cala'
 
 export const schemaTypes = [
   artist,
@@ -14,4 +15,5 @@ export const schemaTypes = [
   dossier,
   news,
   residency,
+  cala,
 ]

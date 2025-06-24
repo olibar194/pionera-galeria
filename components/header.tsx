@@ -45,7 +45,8 @@ export default function Header() {
     { href: '/ferias', label: t('fairs') },
     { href: '/noticias', label: t('news') },
     { href: '/contacto', label: t('contact') },
-    { href: '/residencias', label: t('residency', { default: 'Residencias' }) },
+    { href: '/club-atletico-lxs-amores', label: 'C.A.L.A' },
+    { href: '/residencias', label: t('residency') },
   ]
 
   const navVariants = {

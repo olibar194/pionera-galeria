@@ -128,6 +128,34 @@ export default {
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'fair' }] }],
     },
+    {
+      name: 'videos',
+      title: 'Videos',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+            },
+            {
+              name: 'thumbnail',
+              title: 'Thumbnail',
+              type: 'image',
+              options: { hotspot: true },
+            },
+          ],
+        },
+      ],
+    },
   ],
   orderings: [
     {
@@ -139,24 +167,15 @@ export default {
   preview: {
     select: {
       title: 'title.es',
-      subtitle: 'publicationDate',
+      subtitle: 'summary.es',
       media: 'mainImage',
-      isExternal: 'isExternalLink',
-      internalLink: 'internalLinkRef.slug.current', // Asumiendo que las referencias tienen slug
-      externalUrl: 'externalUrl',
     },
     prepare(selection: any) {
-      const { title, subtitle, media, isExternal, internalLink, externalUrl } =
-        selection
-      const displaySubtitle = isExternal
-        ? `External: ${externalUrl}`
-        : internalLink
-          ? `Internal: /${internalLink}`
-          : `Internal (own page)`
+      const { title, subtitle, media } = selection
       return {
-        title: title,
-        subtitle: `${new Date(subtitle).toLocaleDateString()} - ${displaySubtitle}`,
-        media: media,
+        title,
+        subtitle,
+        media,
       }
     },
   },
