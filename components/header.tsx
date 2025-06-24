@@ -94,7 +94,7 @@ export default function Header() {
                   <Link
                     href={item.href}
                     className={`px-4 py-2 text-lg uppercase font-bold transition-colors hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black ${
-                      pathname === item.href
+                      pathname === item.href || pathname === `/en${item.href}`
                         ? 'bg-black text-white dark:bg-white dark:text-black'
                         : 'text-black dark:text-white'
                     }`}
@@ -144,7 +144,7 @@ export default function Header() {
                       key={item.href}
                       href={item.href}
                       className={`p-4 text-xl uppercase font-bold transition-colors hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black ${
-                        pathname === item.href
+                        pathname === item.href || pathname === `/en${item.href}`
                           ? 'bg-black text-white dark:bg-white dark:text-black'
                           : 'text-black dark:text-white'
                       }`}
