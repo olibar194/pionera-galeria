@@ -12,6 +12,7 @@ import {
 } from '../ui/select'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 import { Label } from '../ui/label'
+import React, { useState, useEffect } from 'react'
 
 const translations = {
   es: {
@@ -84,14 +85,54 @@ export default function ResidencyForm({ locale }: ResidencyFormProps) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
     reset,
   } = useForm<ResidencyFormFields>()
 
-  const onSubmit = (data: ResidencyFormFields) => {
-    // Aquí puedes manejar el envío, por ejemplo, enviar a una API o mostrar un mensaje
-    alert(t.exito)
-    reset()
+  // Estado para el select de duración
+  const [duracionEstadia, setDuracionEstadia] = useState('')
+
+  useEffect(() => {
+    setValue('duracionEstadia', duracionEstadia, { shouldValidate: true })
+  }, [duracionEstadia, setValue])
+
+  const onSubmit = async (data: ResidencyFormFields) => {
+    try {
+      const formData = new FormData()
+      formData.append('nombre', data.nombreCompleto)
+      formData.append('nacionalidad', data.nacionalidadPais)
+      formData.append('fechaNacimiento', data.fechaNacimiento)
+      formData.append('email', data.email)
+      formData.append('beca', data.beca)
+      formData.append('duracionEstadia', data.duracionEstadia)
+      formData.append('alojamiento', data.alojamiento)
+      // Archivos
+      if (data.cv && data.cv.length > 0) {
+        formData.append('cv', data.cv[0])
+      }
+      if (data.propuesta && data.propuesta.length > 0) {
+        formData.append('propuesta', data.propuesta[0])
+      }
+      // Puedes agregar más campos si los necesitas
+
+      // const response = await fetch('/api/submit-residencia', {
+      //   method: 'POST',
+      //   body: formData,
+      // })
+      // const result = await response.json()
+      // if (result.success) {
+      //   alert(t.exito)
+      //   reset()
+      //   setDuracionEstadia('')
+      // } else {
+      //   alert(result.error || 'Error al enviar el formulario')
+      // }
+      alert(t.exito)
+    } catch (err) {
+      alert('Error de red o servidor')
+      console.error(err)
+    }
   }
 
   return (
@@ -208,11 +249,7 @@ export default function ResidencyForm({ locale }: ResidencyFormProps) {
       </div>
       <div>
         <Label htmlFor='duracionEstadia'>{t.duracionEstadia} *</Label>
-        <Select
-          {...register('duracionEstadia', {
-            required: t.seleccionaOpcion,
-          })}
-        >
+        <Select value={duracionEstadia} onValueChange={setDuracionEstadia}>
           <SelectTrigger id='duracionEstadia'>
             <SelectValue placeholder={t.placeholderDuracion} />
           </SelectTrigger>
