@@ -12,7 +12,7 @@ export const schemaTypes = [
   artwork,
   exhibition,
   fair,
-  dossier,
+  // dossier,
   news,
   residency,
   cala,

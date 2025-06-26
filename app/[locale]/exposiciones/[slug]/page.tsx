@@ -74,7 +74,7 @@ export default async function ExhibitionPage({
   return (
     <div>
       {/* Banner Section */}
-      <div className='relative h-[60vh] min-h-[400px] w-full'>
+      <div className='relative h-[80vh] min-h-[500px] w-full overflow-hidden'>
         <Image
           src={exhibition.mainImage.url || '/placeholder.svg'}
           alt={exhibition.mainImage.alt}

@@ -45,7 +45,7 @@ export default async function FairPage({
   return (
     <div>
       {/* Banner */}
-      <div className='relative h-[60vh] min-h-[400px] w-full'>
+      <div className='relative h-[80vh] min-h-[500px] w-full overflow-hidden'>
         <Image
           src={fair.mainImage.url || '/placeholder.svg'}
           alt={fair.mainImage.alt}

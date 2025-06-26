@@ -156,6 +156,24 @@ export default {
         },
       ],
     },
+    {
+      name: 'gallery',
+      title: 'Gallery',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alternative Text',
+              type: 'string',
+            },
+          ],
+        },
+      ],
+    },
   ],
   orderings: [
     {

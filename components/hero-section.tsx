@@ -66,7 +66,7 @@ export default function HeroSection({ exhibition }: HeroSectionProps) {
   ]
 
   return (
-    <section className='relative h-[80vh] min-h-[600px] w-full overflow-hidden'>
+    <section className='relative h-[80vh] min-h-[500px] w-full overflow-hidden'>
       {/* Background Image with blend mode */}
       <div className='absolute inset-0'>
         <Image
@@ -77,7 +77,7 @@ export default function HeroSection({ exhibition }: HeroSectionProps) {
           priority
           sizes='100vw'
         />
-        <div className='absolute inset-0 bg-graphic-blue mix-blend-multiply opacity-40 dark:mix-blend-hard-light dark:opacity-30' />
+        {/* <div className='absolute inset-0 bg-graphic-blue mix-blend-multiply opacity-40 dark:mix-blend-hard-light dark:opacity-30' /> */}
       </div>
 
       {/* Decorative shapes */}
@@ -98,7 +98,7 @@ export default function HeroSection({ exhibition }: HeroSectionProps) {
       ))}
 
       {/* Content */}
-      <div className='container relative z-10 mx-auto flex h-full items-center px-4'>
+      <div className='container relative z-10 mx-auto flex h-full items-end px-4 pb-12'>
         <motion.div
           className='max-w-2xl text-gallery-white'
           variants={container}

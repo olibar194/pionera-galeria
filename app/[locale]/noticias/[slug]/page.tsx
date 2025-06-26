@@ -11,6 +11,7 @@ import { motion } from 'framer-motion'
 import BlockContent from '@/components/block-content'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, ExternalLink } from 'lucide-react'
+import ExhibitionImageGallery from '@/components/exhibition-image-gallery'
 
 export default function NewsDetailPage() {
   const { slug } = useParams()
@@ -48,6 +49,13 @@ export default function NewsDetailPage() {
       </div>
     )
   }
+
+  // Gallery images for lightbox
+  const galleryImages =
+    news?.gallery?.map((img: any) => ({
+      url: img.asset?.url,
+      alt: img.alt,
+    })) || []
 
   return (
     <div className='container mx-auto px-4 py-32'>
@@ -107,7 +115,7 @@ export default function NewsDetailPage() {
         </motion.div>
 
         <motion.div
-          className='prose prose-lg max-w-none dark:prose-invert'
+          className='prose prose-lg max-w-none dark:prose-invert mb-16'
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -149,6 +157,14 @@ export default function NewsDetailPage() {
             </div>
           )}
         </motion.div>
+
+        {/* Gallery Section */}
+        {galleryImages.length > 0 && (
+          <div className='mb-16'>
+            <h2 className='text-3xl font-bold uppercase mb-6'>Galería</h2>
+            <ExhibitionImageGallery images={galleryImages} />
+          </div>
+        )}
       </div>
     </div>
   )
